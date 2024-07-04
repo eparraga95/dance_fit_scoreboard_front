@@ -387,7 +387,7 @@ const ScoreCreateForm: FunctionComponent<ScoreCreateFormProps> = ({
             type="submit"
             style={{ marginTop: `1rem`, marginBottom: `4rem` }}
           >
-            Eviar Score <FaArrowUpRightFromSquare />
+            Enviar Score <FaArrowUpRightFromSquare />
           </Button>
 
           <BallTriangle
