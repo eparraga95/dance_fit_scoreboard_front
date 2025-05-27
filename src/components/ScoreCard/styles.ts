@@ -5,9 +5,29 @@ export const ScoreCardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: ${(props) => props.theme.colors.background};
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 `;
 
-export const ScoreInfoContainer = styled.div``;
+export const ScoreInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+
+  p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+  }
+`;
 
 export const ScoreDataContainer = styled.div`
   display: flex;
