@@ -12,6 +12,16 @@ interface UDashboardHomeProps {}
 const UDashboardHome: FunctionComponent<UDashboardHomeProps> = () => {
   return (
     <GlobalContainer>
+      <PatchTitle>Notas de Atualização - 26/05/25</PatchTitle>
+
+      <HorizontalRuler />
+
+      <ContentList>
+        <ContentListItem>
+          Adicionada página de Scores.
+        </ContentListItem>
+      </ContentList>
+
       <PatchTitle>Notas de Atualização - 26/08/24</PatchTitle>
 
       <HorizontalRuler />

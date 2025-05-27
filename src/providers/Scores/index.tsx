@@ -25,6 +25,9 @@ export interface IScoreContext {
   deleteScore: (score_id: number) => void;
   adminValidateScore: (score_id: number) => void;
   adminInvalidateScore: (score_id: number) => void;
+  paginatedScores: IScore[];
+  fetchPaginatedScores: (page: number, limit: number, order: string) => void;
+  hasMoreScores: boolean;
 }
 
 const ScoreContext = createContext<IScoreContext>({} as IScoreContext);
@@ -45,6 +48,33 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
   const [scoreRefreshTrigger, setScoreRefreshTrigger] = useState<boolean>(true)
 
   const [isLoadingSubmitScore, setIsLoadingSubmitScore] = useState<boolean>(false)
+
+  const [paginatedScores, setPaginatedScores] = useState<IScore[]>([]);
+
+  const [hasMoreScores, setHasMoreScores] = useState<boolean>(true);
+
+  const fetchPaginatedScores = async (page: number, limit: number, order: string) => {
+    try {
+      const res = await api.get(`/scores`, {
+        params: { page, limit, order },
+        headers: {
+          Authorization: `Bearer ${accToken}`,
+        },
+      });
+
+      if (res.status === 200) {
+        const newScores = res.data.data;
+        setPaginatedScores((prevScores) => {
+          const existingIds = new Set(prevScores.map((s) => s.score_id));
+          const filteredNewScores = newScores.filter((s: IScore) => !existingIds.has(s.score_id));
+          return [...prevScores, ...filteredNewScores];
+        });
+        setHasMoreScores(newScores.length === limit);
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
 
   const submitScore = async (formData: FormData): Promise<void> => {
     try {
@@ -240,6 +270,9 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
         deleteScore,
         adminValidateScore,
         adminInvalidateScore,
+        paginatedScores,
+        fetchPaginatedScores,
+        hasMoreScores,
       }}
     >
       {children}
